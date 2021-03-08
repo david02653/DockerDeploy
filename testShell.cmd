@@ -1,0 +1,1 @@
+echo "echo command from bash file"
