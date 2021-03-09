@@ -24,7 +24,7 @@ class DemoApplicationTests {
 
     @Test
     void testScript() throws Exception {
-        execute.runScript("testShell.sh");
+        execute.runScript("./testShell.sh");
     }
 
 }
