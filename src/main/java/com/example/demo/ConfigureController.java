@@ -39,8 +39,10 @@ public class ConfigureController {
         else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("append failed");
     }
 
-    public ResponseEntity<Object> build() {
-        return null;
+    @GetMapping(value = "/run")
+    public ResponseEntity<String> build() {
+        if(service.runShell()) return ResponseEntity.ok("> check !");
+        else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("> script failed...");
     }
 
     public ResponseEntity<Object> getCurrentConfig(){
