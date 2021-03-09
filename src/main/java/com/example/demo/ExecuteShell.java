@@ -10,7 +10,8 @@ public class ExecuteShell {
 
     public void runEcho(String msg) throws IOException, InterruptedException {
         runtime = Runtime.getRuntime();
-        String[] cmd = new String[]{"cmd.exe", "/c", "echo", msg};
+//        String[] cmd = new String[]{"cmd.exe", "/c", "echo", msg};
+        String[] cmd = new String[]{"echo", msg};
         Process process = runtime.exec(cmd);
         process.waitFor();
 
