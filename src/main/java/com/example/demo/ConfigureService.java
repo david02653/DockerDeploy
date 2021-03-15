@@ -79,6 +79,8 @@ public class ConfigureService {
 //            runner.runScript("simpleBuild.sh");
             runner.runScript("buildWithVolume.sh");
         }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println(e.toString());
             e.printStackTrace();
             return false;
         }
