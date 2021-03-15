@@ -24,23 +24,27 @@ public class ConfigureController {
 
     @GetMapping(value = "/show")
     public ResponseEntity<String> show() {
+        System.out.println("show()");
         return ResponseEntity.ok(service.showFile());
     }
 
     @GetMapping(value = "/clear")
     public ResponseEntity<String> clear() {
+        System.out.println("clear()");
         if(service.clearFile()) return ResponseEntity.ok("file cleared");
         else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("file clear failed !");
     }
 
     @GetMapping(value = "/append/{msg}")
     public ResponseEntity<String> append(@PathVariable("msg") String msg) {
+        System.out.println("append " + msg);
         if(service.appendFile(msg)) return ResponseEntity.ok("append " + msg + " done");
         else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("append failed");
     }
 
     @GetMapping(value = "/run")
     public ResponseEntity<String> build() {
+        System.out.println("build()");
         if(service.runShell()) return ResponseEntity.ok("> check !");
         else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("> script failed...");
     }
