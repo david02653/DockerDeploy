@@ -13,7 +13,7 @@ public class ConfigureService {
     // rebuild and redeploy new service docker
 
     public void readFile() throws IOException {
-        File target = new File("./target.txt");
+        File target = new File("./src/test/resources/data/target.txt");
         FileReader reader = new FileReader(target);
         BufferedReader buffer = new BufferedReader(reader);
         String line;
@@ -27,7 +27,7 @@ public class ConfigureService {
     public String showFile() {
         try{
             StringBuilder builder = new StringBuilder();
-            File target = new File("./target.txt");
+            File target = new File("./src/test/resources/data/target.txt");
             FileReader reader = new FileReader(target);
             BufferedReader buffer = new BufferedReader(reader);
             String line;
@@ -47,7 +47,7 @@ public class ConfigureService {
 
     public boolean clearFile() {
         try{
-            File file = new File("./target.txt");
+            File file = new File("./src/test/resources/data/target.txt");
             FileWriter writer = new FileWriter(file);
             writer.write("");
             writer.flush();
@@ -61,7 +61,7 @@ public class ConfigureService {
 
     public boolean appendFile(String msg) {
         try{
-            File file = new File("./target.txt");
+            File file = new File("./src/test/resources/data/target.txt");
             FileWriter writer = new FileWriter(file, true);
             PrintWriter printer = new PrintWriter(writer);
             printer.println(msg);
