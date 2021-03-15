@@ -22,6 +22,6 @@ public class ConfigureServiceTest {
 
     @Test
     void writeFileTest() throws IOException {
-        service.appendFile("line");
+        service.appendFile("line-from-test-case");
     }
 }

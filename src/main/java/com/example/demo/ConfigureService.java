@@ -76,7 +76,8 @@ public class ConfigureService {
     public boolean runShell() {
         try{
             ExecuteShell runner = new ExecuteShell();
-            runner.runScript("simpleBuild.sh");
+//            runner.runScript("simpleBuild.sh");
+            runner.runScript("buildWithVolume.sh");
         }catch (Exception e){
             e.printStackTrace();
             return false;
