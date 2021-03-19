@@ -1,35 +1,36 @@
 package com.example.demo.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Story {
 
     public Story(){}
 
-    private NluObject intent;
-    private ArrayList<String> action;
+    private String nickName;
+    private ArrayList<StoryIntent> content;
 
-    public void setIntent(NluObject intent) {
-        this.intent = intent;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
-    public void setAction(ArrayList<String> action) {
-        this.action = action;
+    public void setContent(ArrayList<StoryIntent> content) {
+        this.content = content;
     }
 
-    public NluObject getIntent() {
-        return intent;
+    public String getNickName() {
+        return nickName;
     }
 
-    public ArrayList<String> getAction() {
-        return action;
+    public ArrayList<StoryIntent> getContent() {
+        return content;
     }
 
     @Override
     public String toString() {
         return "Story{" +
-                "intent=" + intent +
-                ", action=" + action +
+                "nickName='" + nickName + '\'' +
+                ", content=" + content +
                 '}';
     }
 }
