@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.entity.Rasa;
 
 import java.util.ArrayList;
 

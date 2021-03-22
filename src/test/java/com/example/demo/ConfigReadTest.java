@@ -1,10 +1,11 @@
 package com.example.demo;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.Rasa.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +47,28 @@ public class ConfigReadTest {
             System.out.println();
         }
         System.out.println(map.size());
+    }
+
+    @Test
+    void testDomainRead(){
+        DomainObj domain = reader.readDomain("domain.yml");
+        ArrayList<String> intent = domain.getIntent();
+        ArrayList<String> action = domain.getActions();
+        HashMap<String, String> tmp = domain.getTemplate();
+        System.out.println("intent: ");
+        for(String s: intent){
+            System.out.println(s);
+        }
+        System.out.println("action: ");
+        for(String s: action){
+            System.out.println(s);
+        }
+        System.out.println("template: ");
+        for(Map.Entry<String, String> entry: tmp.entrySet()){
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.print("[" + key + "]> ");
+            System.out.println(value);
+        }
     }
 }

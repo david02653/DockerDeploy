@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.Rasa.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MdReader {
+
+    private enum DomainEditFlag {INTENT, ACTION, TEMPLATE}
 
     public Nlu readNlu(String name){
 
@@ -101,5 +103,55 @@ public class MdReader {
             e.printStackTrace();
         }
         return stories;
+    }
+
+    public DomainObj readDomain(String name){
+        DomainEditFlag flag = null;
+        DomainObj domain = new DomainObj();
+        ArrayList<String> list = null;
+        HashMap<String, String> tMap = new HashMap<>();
+        try{
+            FileReader file = new FileReader(name);
+            BufferedReader reader = new BufferedReader(file);
+            String line;
+            String key = "";
+            while((line = reader.readLine())!= null){
+                if(line.startsWith("intent")){
+                    // set used intents
+                    list = new ArrayList<>();
+                    flag = DomainEditFlag.INTENT;
+                }else if(line.startsWith("actions")){
+                    // set used actions
+                    list = new ArrayList<>();
+                    flag = DomainEditFlag.ACTION;
+                }else if(line.startsWith("  -")) {
+                    if(list != null)
+                        list.add(line.substring(4));
+                }else if(line.startsWith("template")){
+                    // set template
+                    flag = DomainEditFlag.TEMPLATE;
+                }else if(flag == DomainEditFlag.TEMPLATE && line.length()>2){
+                    if(key.equals("")){
+                        key = line.substring(2);
+                    }else{
+                        tMap.put(key, line.substring(6));
+                        domain.setTemplate(tMap);
+                        key = "";
+                    }
+                }else{
+                    if(flag == DomainEditFlag.INTENT)
+                        domain.setIntent(list);
+                    if(flag == DomainEditFlag.ACTION)
+                        domain.setActions(list);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return domain;
+    }
+
+    public void readAction(String name){
+        
     }
 }
