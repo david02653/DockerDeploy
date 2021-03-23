@@ -1,7 +1,6 @@
-package com.example.demo;
+package com.example.demo.Service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.*;
 

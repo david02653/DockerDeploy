@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Service;
 
 import com.example.demo.entity.Rasa.*;
 
@@ -133,7 +133,8 @@ public class MdReader {
                     flag = DomainEditFlag.TEMPLATE;
                 }else if(flag == DomainEditFlag.TEMPLATE && line.length()>2){
                     if(key.equals("")){
-                        key = line.substring(2);
+//                        key = line.substring(2);
+                        key = line.strip();
                     }else{
                         tMap.put(key, line.substring(6));
                         domain.setTemplate(tMap);
