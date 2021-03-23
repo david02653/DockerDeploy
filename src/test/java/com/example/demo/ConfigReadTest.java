@@ -27,7 +27,7 @@ public class ConfigReadTest {
             System.out.println("type: " + ele.getType());
             System.out.println("name: " + ele.getName());
             for(String cont: ele.getContent()){
-                System.out.print("- ");
+//                System.out.print("- ");
                 System.out.println(cont);
             }
             System.out.println();

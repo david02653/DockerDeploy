@@ -10,6 +10,14 @@ public class NluObject {
     private String type;
     private ArrayList<String> content;
 
+    public boolean equal(NluObject obj){
+        return this.name.equals(obj.getName()) && this.type.equals(obj.getType());
+    }
+
+    public String getTitle(){
+        return this.type + ":" + this.name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
