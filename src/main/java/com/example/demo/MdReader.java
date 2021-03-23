@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class MdReader {
 
     private enum DomainEditFlag {INTENT, ACTION, TEMPLATE}
+    private enum PyEditFlag {NAME, RUN, NONE}
 
     public Nlu readNlu(String name){
 
@@ -151,7 +152,48 @@ public class MdReader {
         return domain;
     }
 
-    public void readAction(String name){
-        
+    public HashMap<String, ArrayList<String>> readAction(String name){
+        // read action file
+        // python file
+        PyEditFlag flag = null;
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        ArrayList<String> temp = null;
+        String funcName = null;
+        try{
+            FileReader file = new FileReader(name);
+            BufferedReader reader = new BufferedReader(file);
+            String line;
+            while((line = reader.readLine()) != null){
+                if(line.startsWith("class")){
+                    temp = new ArrayList<>();
+                    temp.add(line);
+                    funcName = getFuncName(line);
+                    flag = PyEditFlag.NAME;
+                }else{
+                    // end current py-class
+                    if(line.strip().startsWith("def run"))
+                        flag = PyEditFlag.RUN;
+                    else if(flag == PyEditFlag.RUN && line.strip().startsWith("return")){
+                        flag = PyEditFlag.NONE;
+                        if(temp != null) temp.add(line);
+                        map.put(funcName, temp);
+                        funcName = null;
+                    }
+                    // store current line
+                    if(flag != PyEditFlag.NONE)
+                        if(temp != null) temp.add(line);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    public String getFuncName(String msg){
+        msg = msg.strip();
+        String[] token = msg.split("\\(");
+        String target = token[0];
+        return target.split(" ")[1];
     }
 }

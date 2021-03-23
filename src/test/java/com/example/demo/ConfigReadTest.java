@@ -13,6 +13,7 @@ import java.util.Map;
 public class ConfigReadTest {
 
     private MdReader reader;
+    private final String prefixRoute = "./src/main/resources/data/";
     @BeforeEach
     void init(){
         reader = new MdReader();
@@ -20,7 +21,7 @@ public class ConfigReadTest {
 
     @Test
     void testNluRead(){
-        Nlu result = reader.readNlu("nlu.md");
+        Nlu result = reader.readNlu(prefixRoute + "nlu.md");
         for(NluObject ele: result.getElements()){
             System.out.println("type: " + ele.getType());
             System.out.println("name: " + ele.getName());
@@ -33,7 +34,7 @@ public class ConfigReadTest {
     }
     @Test
     void testStoryRead(){
-        Stories stories = reader.readStories("stories.md");
+        Stories stories = reader.readStories(prefixRoute + "stories.md");
         HashMap<Integer, Story> map = stories.getStoryMap();
         for(Map.Entry<Integer, Story> entry: map.entrySet()){
             int key = entry.getKey();
@@ -51,7 +52,7 @@ public class ConfigReadTest {
 
     @Test
     void testDomainRead(){
-        DomainObj domain = reader.readDomain("domain.yml");
+        DomainObj domain = reader.readDomain(prefixRoute + "domain.yml");
         ArrayList<String> intent = domain.getIntent();
         ArrayList<String> action = domain.getActions();
         HashMap<String, String> tmp = domain.getTemplate();
@@ -69,6 +70,26 @@ public class ConfigReadTest {
             String value = entry.getValue();
             System.out.print("[" + key + "]> ");
             System.out.println(value);
+        }
+    }
+
+    @Test
+    void testFuncNameGet(){
+        String temp = "a b(c):";
+        System.out.println(reader.getFuncName(temp));
+    }
+
+    @Test
+    void testPyRead(){
+        HashMap<String, ArrayList<String>> map = reader.readAction(prefixRoute + "actions.py");
+        System.out.println(map.size());
+        for(Map.Entry<String, ArrayList<String>> entry: map.entrySet()){
+            String name = entry.getKey();
+            ArrayList<String> content = entry.getValue();
+            System.out.println("> " + name + " :");
+            for(String s: content){
+                System.out.println(s);
+            }
         }
     }
 }
