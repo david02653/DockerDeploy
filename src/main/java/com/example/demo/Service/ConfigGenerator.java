@@ -11,9 +11,11 @@ import java.util.Map;
 
 public class ConfigGenerator {
 
+    private final String PREFIX = "./src/main/resources/result/";
+
     // merge and generate new nlu config
     public void mergeNlu(Nlu custom, Nlu current){
-        Nlu result = new Nlu();
+//        Nlu result = new Nlu();
         HashMap<String, ArrayList<String>> map = new HashMap<>();
         for(NluObject obj: current.getElements()){
             // add current nlu config in result list
@@ -29,7 +31,7 @@ public class ConfigGenerator {
         }
         // export new nlu config
         try{
-            FileWriter file = new FileWriter("./src/main/resources/result/nlu.md");
+            FileWriter file = new FileWriter(PREFIX + "nlu.md");
             BufferedWriter writer = new BufferedWriter(file);
             for(Map.Entry<String, ArrayList<String>> entry: map.entrySet()){
                 String title = entry.getKey();
@@ -49,6 +51,27 @@ public class ConfigGenerator {
 
     // merge and generate new stories config
     public void mergeStories(Stories custom, Stories current){
+        HashMap<String, Story> map = new HashMap<>();
+        for(Map.Entry<Integer, Story> entry: current.getStoryMap().entrySet()){
+            map.put(entry.getValue().getNickName(), entry.getValue());
+        }
+        for(Map.Entry<Integer, Story> entry: custom.getStoryMap().entrySet()){
+            map.merge(entry.getValue().getNickName(), entry.getValue(), (oldValue, nValue)-> {
+                // fix this !
+                return nValue;
+            });
+        }
+        // export new stories config
+        try{
+            FileWriter file = new FileWriter(PREFIX + "stories.md");
+            BufferedWriter writer = new BufferedWriter(file);
+            for(Map.Entry<String, Story> entry: map.entrySet()){
+                String nickName = entry.getKey();
+                Story content = entry.getValue();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     // merge and generate new domain config
