@@ -1,7 +1,6 @@
 package com.example.demo.Service;
 
 import com.example.demo.entity.Rasa.*;
-import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 public class ConfigGenerator {
 
-    private final String PREFIX = "./src/main/resources/result/";
+    private final String RESULT_PREFIX = "./src/main/resources/result/";
 
     // merge and generate new nlu config
     public void mergeNlu(Nlu custom, Nlu current){
@@ -32,7 +31,7 @@ public class ConfigGenerator {
         }
         // export new nlu config
         try{
-            FileWriter file = new FileWriter(PREFIX + "nlu.md");
+            FileWriter file = new FileWriter(RESULT_PREFIX + "nlu.md");
             BufferedWriter writer = new BufferedWriter(file);
             for(Map.Entry<String, ArrayList<String>> entry: map.entrySet()){
                 String title = entry.getKey();
@@ -64,7 +63,7 @@ public class ConfigGenerator {
         }
         // export new stories config
         try{
-            FileWriter file = new FileWriter(PREFIX + "stories.md");
+            FileWriter file = new FileWriter(RESULT_PREFIX + "stories.md");
             BufferedWriter writer = new BufferedWriter(file);
             for(Map.Entry<String, Story> entry: map.entrySet()){
                 String nickName = entry.getKey();
@@ -84,9 +83,35 @@ public class ConfigGenerator {
     }
 
     // temporary method for testing
-    public void splitConfig(String content){
-        Gson gson = new Gson();
-        AllConfig config;
-        config = gson.fromJson(content, new AllConfig(){}.getClass());
+    public void generateSingleNlu(String content){
+//        Gson gson = new Gson();
+//        AllConfig config;
+//        config = gson.fromJson(content, new AllConfig(){}.getClass());
+    }
+    public void generateSetting(String content, String type){
+        try{
+            FileWriter file = null;
+            BufferedWriter writer = null;
+            // declare file name
+            switch(type){
+                case "nlu":
+                    file = new FileWriter(RESULT_PREFIX + "nlu.md");
+                    break;
+                case "domain":
+                    file = new FileWriter(RESULT_PREFIX + "domain.yml");
+                    break;
+                case "action":
+                    file = new FileWriter(RESULT_PREFIX + "actions.py");
+                    break;
+                case "stories":
+                    file = new FileWriter(RESULT_PREFIX + "stories.md");
+                    break;
+            }
+            if(file != null) writer = new BufferedWriter(file);
+            // fill data content
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
