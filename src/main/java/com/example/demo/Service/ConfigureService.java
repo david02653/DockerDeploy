@@ -1,8 +1,11 @@
 package com.example.demo.Service;
 
+import com.example.demo.entity.Rasa.AllConfig;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Service
 public class ConfigureService {
@@ -84,5 +87,45 @@ public class ConfigureService {
             return false;
         }
         return true;
+    }
+
+    // temporary method: split config
+    public void splitConfig(String config){
+        // split one config to nlu, domain, stories and action
+        String[] token = config.split("-----\n");
+        AllConfig settings = new AllConfig();
+        // split nlu settings
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(token[0].split("\n")));
+        settings.setNlu(list);
+        // split domain settings
+        list = new ArrayList<>(Arrays.asList(token[1].split("\n")));
+        settings.setDomain(list);
+        // split action settings
+        list = new ArrayList<>(Arrays.asList(token[3].split("\n")));
+        settings.setAction(list);
+        // split stories settings
+        list = new ArrayList<>(Arrays.asList(token[2].split("\n")));
+        settings.setStories(list);
+
+        printSplitResult(settings);
+    }
+    // temporary method for split testing
+    public void printSplitResult(AllConfig config){
+        System.out.println(">> NLU");
+        for(String s: config.getNlu()){
+            System.out.println(s);
+        }
+        System.out.println(">> DOMAIN");
+        for(String s: config.getDomain()){
+            System.out.println(s);
+        }
+        System.out.println(">> STORIES");
+        for(String s: config.getStories()){
+            System.out.println(s);
+        }
+        System.out.println(">> ACTIONS");
+        for(String s: config.getAction()){
+            System.out.println(s);
+        }
     }
 }

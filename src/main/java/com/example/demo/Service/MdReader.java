@@ -197,4 +197,27 @@ public class MdReader {
         String target = token[0];
         return target.split(" ")[1];
     }
+
+
+    // temporary method for testing
+    public Nlu readSplitNlu(ArrayList<String> config){
+        return null;
+    }
+
+    public Stories readSplitStories(ArrayList<String> config){
+        return null;
+    }
+
+    public DomainObj readSplitDomain(ArrayList<String> config){
+        return null;
+    }
+
+    public HashMap<String, ArrayList<String>> readSplitAction(ArrayList<String> config){
+        return null;
+    }
+
+    // split config from one config source
+    public HashMap<String, ArrayList<String>> configSplit(){
+        return null;
+    }
 }

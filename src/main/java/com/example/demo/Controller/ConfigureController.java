@@ -4,10 +4,9 @@ import com.example.demo.Service.ConfigureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/config")
@@ -56,5 +55,16 @@ public class ConfigureController {
     public ResponseEntity<Object> postNewConfig(){
         // TODO: post new config
         return null;
+    }
+
+    @PostMapping(value = "/allinone")
+    public ResponseEntity<String> postAllConfig(@RequestBody String list) {
+//        System.out.println(list);
+        service.splitConfig(list);
+//        String[] token = list.split("split\n");
+//        System.out.println(token[0]);
+//        System.out.println(token.length);
+//        System.out.println(token[1]);
+        return ResponseEntity.ok("ok");
     }
 }

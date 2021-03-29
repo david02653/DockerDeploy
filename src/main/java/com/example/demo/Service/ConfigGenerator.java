@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.entity.Rasa.*;
+import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -80,5 +81,12 @@ public class ConfigGenerator {
 
     // merge and generate new action config
     public void mergeAction(ArrayList<PyMethod> custom, HashMap<String, ArrayList<String>> current){
+    }
+
+    // temporary method for testing
+    public void splitConfig(String content){
+        Gson gson = new Gson();
+        AllConfig config;
+        config = gson.fromJson(content, new AllConfig(){}.getClass());
     }
 }
