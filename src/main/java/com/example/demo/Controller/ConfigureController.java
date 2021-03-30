@@ -61,6 +61,7 @@ public class ConfigureController {
     public ResponseEntity<String> postAllConfig(@RequestBody String list) {
 //        System.out.println(list);
         service.splitConfig(list);
+        service.runSpecShell("buildRasa.sh");
 //        String[] token = list.split("split\n");
 //        System.out.println(token[0]);
 //        System.out.println(token.length);

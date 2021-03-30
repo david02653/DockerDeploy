@@ -89,6 +89,19 @@ public class ConfigureService {
         return true;
     }
 
+    public boolean runSpecShell(String filename){
+        try{
+            ExecuteShell runner = new ExecuteShell();
+            runner.runScript(filename);
+        }catch (IOException | InterruptedException e){
+            System.out.println(e.getMessage());
+            System.out.println(e.toString());
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     // temporary method: split config
     public void splitConfig(String config){
         // split one config to nlu, domain, stories and action
@@ -101,13 +114,15 @@ public class ConfigureService {
         list = new ArrayList<>(Arrays.asList(token[1].split("\n")));
         settings.setDomain(list);
         // split action settings
-        list = new ArrayList<>(Arrays.asList(token[3].split("\n")));
+        list = new ArrayList<>(Arrays.asList(token[2].split("\n")));
         settings.setAction(list);
         // split stories settings
-        list = new ArrayList<>(Arrays.asList(token[2].split("\n")));
+        list = new ArrayList<>(Arrays.asList(token[3].split("\n")));
         settings.setStories(list);
-
-        printSplitResult(settings);
+        ConfigGenerator generator = new ConfigGenerator();
+        generator.generateSetting(settings, "test");
+        // print config
+//        printSplitResult(settings);
     }
     // temporary method for split testing
     public void printSplitResult(AllConfig config){

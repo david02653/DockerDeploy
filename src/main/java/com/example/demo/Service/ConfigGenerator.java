@@ -88,28 +88,59 @@ public class ConfigGenerator {
 //        AllConfig config;
 //        config = gson.fromJson(content, new AllConfig(){}.getClass());
     }
-    public void generateSetting(String content, String type){
+    public void generateSetting(AllConfig config, String type){
         try{
             FileWriter file = null;
             BufferedWriter writer = null;
             // declare file name
-            switch(type){
-                case "nlu":
-                    file = new FileWriter(RESULT_PREFIX + "nlu.md");
-                    break;
-                case "domain":
-                    file = new FileWriter(RESULT_PREFIX + "domain.yml");
-                    break;
-                case "action":
-                    file = new FileWriter(RESULT_PREFIX + "actions.py");
-                    break;
-                case "stories":
-                    file = new FileWriter(RESULT_PREFIX + "stories.md");
-                    break;
+//            switch(type){
+//                case "nlu":
+//                    file = new FileWriter(RESULT_PREFIX + "nlu.md");
+//                    break;
+//                case "domain":
+//                    file = new FileWriter(RESULT_PREFIX + "domain.yml");
+//                    break;
+//                case "action":
+//                    file = new FileWriter(RESULT_PREFIX + "actions.py");
+//                    break;
+//                case "stories":
+//                    file = new FileWriter(RESULT_PREFIX + "stories.md");
+//                    break;
+//            }
+//            if(file != null) writer = new BufferedWriter(file);
+            file = new FileWriter(RESULT_PREFIX + "test.txt");
+//            writer = new BufferedWriter(file);
+//            writer.write("test export again");
+//            writer.write("next line");
+//            writer.close();
+            file = new FileWriter(RESULT_PREFIX + "nlu.md");
+            writer = new BufferedWriter(file);
+            for(String s: config.getNlu()){
+                writer.write(s);
+                writer.newLine();
             }
-            if(file != null) writer = new BufferedWriter(file);
-            // fill data content
-
+            writer.close();
+            file = new FileWriter(RESULT_PREFIX + "domain.yml");
+            writer = new BufferedWriter(file);
+            for(String s: config.getDomain()){
+                writer.write(s);
+                writer.newLine();
+            }
+            writer.close();
+            file = new FileWriter(RESULT_PREFIX + "actions.py");
+            writer = new BufferedWriter(file);
+            for(String s: config.getAction()){
+                writer.write(s);
+                writer.newLine();
+            }
+            writer.close();
+            file = new FileWriter(RESULT_PREFIX + "stories.md");
+            writer = new BufferedWriter(file);
+            for(String s: config.getStories()){
+                writer.write(s);
+                writer.newLine();
+            }
+            writer.close();
         }catch (IOException e){
             e.printStackTrace();
         }
