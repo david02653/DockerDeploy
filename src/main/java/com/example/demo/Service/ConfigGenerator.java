@@ -108,7 +108,7 @@ public class ConfigGenerator {
 //                    break;
 //            }
 //            if(file != null) writer = new BufferedWriter(file);
-            file = new FileWriter(RESULT_PREFIX + "test.txt");
+//            file = new FileWriter(RESULT_PREFIX + "test.txt");
 //            writer = new BufferedWriter(file);
 //            writer.write("test export again");
 //            writer.write("next line");
