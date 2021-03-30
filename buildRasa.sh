@@ -17,5 +17,8 @@ cp $PROJECT_HOME$RESOURCE_DIR$SETTING_DIR/domain.yml $RASA_DIR$DOMAIN
 cp $PROJECT_HOME$RESOURCE_DIR$SETTING_DIR/stories.md $RASA_DIR$STORIES
 cp $PROJECT_HOME$RESOURCE_DIR$SETTING_DIR/actions.py $RASA_DIR$ACTION
 
+# move to rasa workspace
+# shellcheck disable=SC2164
+cd $RASA_DIR
 # redeploy rasa docker
-sh $RASA_DIR/build.sh
+sh build.sh
