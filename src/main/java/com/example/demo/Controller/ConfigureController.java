@@ -57,15 +57,20 @@ public class ConfigureController {
         return null;
     }
 
-    @PostMapping(value = "/allinone")
+    @PostMapping(value = "/gen")
     public ResponseEntity<String> postAllConfig(@RequestBody String list) {
 //        System.out.println(list);
         service.splitConfig(list);
-        service.runSpecShell("buildRasa.sh");
+//        service.runSpecShell("buildRasa.sh");
 //        String[] token = list.split("split\n");
 //        System.out.println(token[0]);
 //        System.out.println(token.length);
 //        System.out.println(token[1]);
         return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping(value = "/rasaboot")
+    public ResponseEntity<String> rebootRasa(){
+        return service.runSpecShell("buildRasa.sh")? ResponseEntity.ok("success!"):ResponseEntity.ok("something goes wrong !");
     }
 }
