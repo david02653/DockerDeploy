@@ -1,7 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.Service.MdReader;
-import com.example.demo.entity.Rasa.*;
+import com.example.demo.entity.Rasa.legacy.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

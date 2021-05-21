@@ -1,12 +1,16 @@
 package com.example.demo.Service;
 
-import com.example.demo.entity.Rasa.AllConfig;
+import com.example.demo.entity.Rasa.legacy.AllConfig;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * only work on old version: 0.x
+ */
+// TODO: update reader to current version (2.x)
 @Service
 public class ConfigureService {
     // execute shell

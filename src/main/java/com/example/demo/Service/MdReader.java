@@ -1,12 +1,15 @@
 package com.example.demo.Service;
 
-import com.example.demo.entity.Rasa.*;
+import com.example.demo.entity.Rasa.legacy.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * only work on old version: 0.x
+ */
 public class MdReader {
 
     private enum DomainEditFlag {INTENT, ACTION, TEMPLATE}

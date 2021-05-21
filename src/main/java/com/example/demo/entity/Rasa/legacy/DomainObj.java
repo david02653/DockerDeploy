@@ -1,4 +1,4 @@
-package com.example.demo.entity.Rasa;
+package com.example.demo.entity.Rasa.legacy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

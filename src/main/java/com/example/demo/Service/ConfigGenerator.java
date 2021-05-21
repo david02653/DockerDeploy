@@ -1,6 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.entity.Rasa.*;
+import com.example.demo.entity.Rasa.legacy.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * only work on old version: 0.x
+ */
+// TODO: update reader to current version (2.x)
 public class ConfigGenerator {
 
     private final String RESULT_PREFIX = "./src/main/resources/result/";

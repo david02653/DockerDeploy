@@ -1,0 +1,16 @@
+nlu:
+- intent: get_some_help
+  examples: |
+    - stop it
+    - get some help
+- synonym: test_file
+  examples: |
+    - test file
+    - testfile
+- regex: help
+  examples: |
+    - \bhelp\b
+- lookup: fruit
+  examples: |
+    - apple
+    - mango
