@@ -2,9 +2,9 @@ package com.example.demo.entity.Rasa.legacy;
 
 import java.util.HashMap;
 
-public class Stories {
+public class StoryFile {
 
-    public Stories(){}
+    public StoryFile(){}
 
     private HashMap<Integer, Story> storyMap;
 
