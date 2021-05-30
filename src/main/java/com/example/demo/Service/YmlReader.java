@@ -50,6 +50,7 @@ public class YmlReader {
 
     /**
      * read nlu.yml, use snakeYml and gson library, load with javaBean
+     * because of NluObject data type, need to check all intent type to make sure if 'intent_name' exist
      * @param path file path
      * @return result nlu file object
      */
@@ -67,7 +68,6 @@ public class YmlReader {
 //            System.out.println(parsedFile);
         }catch (IOException e){
             e.printStackTrace();
-            return null;
         }
         return parsedFile;
     }
