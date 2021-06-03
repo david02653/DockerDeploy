@@ -29,7 +29,12 @@ public class NluFile {
         }
     }
 
+    /**
+     * only check intent, should check others
+     * @param name target name
+     * @return if exist
+     */
     public boolean containsName(String name){
-        return nlu.stream().anyMatch(obj -> obj.getIntentName().equals(name));
+        return nlu.stream().anyMatch(obj -> obj.findName().equals(name));
     }
 }

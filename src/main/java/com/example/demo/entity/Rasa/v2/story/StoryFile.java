@@ -1,5 +1,7 @@
 package com.example.demo.entity.Rasa.v2.story;
 
+import com.example.demo.entity.Rasa.v2.action.ActionFile;
+
 import java.util.ArrayList;
 
 public class StoryFile {
@@ -19,5 +21,11 @@ public class StoryFile {
         return "StoryFile{" +
                 "storyList=" + storyList +
                 '}';
+    }
+
+    public StoryFile copy(){
+        StoryFile file = new StoryFile();
+        file.setStoryList(getStoryList());
+        return file;
     }
 }

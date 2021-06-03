@@ -49,9 +49,9 @@ public class MdReader {
         return nlu;
     }
 
-    public Stories readStories(String name){
+    public StoryFile readStories(String name){
 
-        Stories stories = new Stories();
+        StoryFile stories = new StoryFile();
         HashMap<Integer, Story> storyList = new HashMap<>();
         Story story = new Story();
         ArrayList<String> actionList = null;
@@ -168,6 +168,7 @@ public class MdReader {
             BufferedReader reader = new BufferedReader(file);
             String line;
             while((line = reader.readLine()) != null){
+                if(line.startsWith("#")) continue;
                 if(line.startsWith("class")){
                     temp = new ArrayList<>();
                     temp.add(line);
@@ -207,7 +208,7 @@ public class MdReader {
         return null;
     }
 
-    public Stories readSplitStories(ArrayList<String> config){
+    public StoryFile readSplitStories(ArrayList<String> config){
         return null;
     }
 

@@ -54,7 +54,7 @@ public class ConfigGenerator {
     }
 
     // merge and generate new stories config
-    public void mergeStories(Stories custom, Stories current){
+    public void mergeStories(StoryFile custom, StoryFile current){
         HashMap<String, Story> map = new HashMap<>();
         for(Map.Entry<Integer, Story> entry: current.getStoryMap().entrySet()){
             map.put(entry.getValue().getNickName(), entry.getValue());

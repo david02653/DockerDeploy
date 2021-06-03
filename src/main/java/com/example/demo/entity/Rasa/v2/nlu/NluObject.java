@@ -3,15 +3,18 @@ package com.example.demo.entity.Rasa.v2.nlu;
 import java.util.ArrayList;
 
 public class NluObject {
-    private String intentName;
+    // possible data type
+    private String intent;
     private String synonym;
     private String regex;
     private String lookup;
+    // examples in one string
     private String examples;
+    // arrayList of examples
     private ArrayList<String> exampleList;
 
-    public void setIntentName(String intentName) {
-        this.intentName = intentName;
+    public void setIntent(String intent) {
+        this.intent = intent;
     }
 
     public void setSynonym(String synonym) {
@@ -34,8 +37,8 @@ public class NluObject {
         this.exampleList = exampleList;
     }
 
-    public String getIntentName() {
-        return intentName;
+    public String getIntent() {
+        return intent;
     }
 
     public String getSynonym() {
@@ -61,7 +64,7 @@ public class NluObject {
     @Override
     public String toString() {
         return "NluEntity{" +
-                "intent='" + intentName + '\'' +
+                "intent='" + intent + '\'' +
                 ", synonym='" + synonym + '\'' +
                 ", regex='" + regex + '\'' +
                 ", lookup='" + lookup + '\'' +
@@ -79,5 +82,20 @@ public class NluObject {
             }
         }
         setExampleList(tmp);
+    }
+
+    public String findName(){
+        if(intent != null) return intent;
+        if(synonym != null) return synonym;
+        if(regex != null) return regex;
+        if(lookup != null) return lookup;
+        return "";
+    }
+
+    public String findType(){
+        if(intent != null) return "intent";
+        if(synonym != null) return "synonym";
+        if(regex != null) return "regex";
+        return "lookup";
     }
 }

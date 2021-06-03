@@ -30,4 +30,11 @@ public class ActionFile {
                 ", actionList=" + actionList +
                 '}';
     }
+
+    public ActionFile copy(){
+        ActionFile file = new ActionFile();
+        file.setActionList(getActionList());
+        file.setImportConfig(getImportConfig());
+        return file;
+    }
 }

@@ -1,8 +1,13 @@
 nlu:
+  # test
 - intent: get_some_help
   examples: |
     - stop it
     - get some help
+- intent: test_intent
+  examples: |
+    - test 1
+    - test 2
 - synonym: test_file
   examples: |
     - test file
