@@ -1,0 +1,26 @@
+version: '2.0'
+# test set 1
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- inform
+slots:
+  email:
+    type: text
+    influence_conversation: false
+  address:
+    type: categorical
+    values:
+    - 132
+    - 456
+entities:
+- person
+responses:
+  utter_hello:
+  - text: |
+      {\"intent\": \"hello\"}
+actions:
+- action_search_concerts
+forms:

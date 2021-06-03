@@ -14,7 +14,7 @@ import java.util.Map;
 public class ConfigReadTest {
 
     private MdReader reader;
-    private final String prefixRoute = "./src/main/resources/data/";
+    private final String prefixRoute = "./src/main/resources/data/legacy/";
     @BeforeEach
     void init(){
         reader = new MdReader();
@@ -35,7 +35,7 @@ public class ConfigReadTest {
     }
     @Test
     void testStoryRead(){
-        Stories stories = reader.readStories(prefixRoute + "stories.md");
+        StoryFile stories = reader.readStories(prefixRoute + "stories.md");
         HashMap<Integer, Story> map = stories.getStoryMap();
         for(Map.Entry<Integer, Story> entry: map.entrySet()){
             int key = entry.getKey();
