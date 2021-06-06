@@ -18,7 +18,7 @@ class YmlReaderTest {
     private final String NLU_TEST = "v2/nluTest.yml";
     private final String STORY_TEST = "v2/storyTest.yml";
     private final String RESP_TEST = "v2/respTest.yml";
-    private final String DOM_TEST = "v2/domainTest.yml";
+    private final String DOM_TEST = "v2/domain.yml";
     private final String ACT_TEST = "v2/actionsTest.py";
     private final String DOM_TEST_SET = "v2/mergeData/domain/domainTestSet1.yml";
     private YmlReader reader;
@@ -52,6 +52,10 @@ class YmlReaderTest {
             System.out.println(k + " >");
             System.out.println(v);
         });
+        System.out.println("test:");
+        for(String token: map.get("RESPONSES")){
+            System.out.println(token);
+        }
     }
 
     @Test

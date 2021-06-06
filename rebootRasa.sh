@@ -10,6 +10,7 @@ N_NLU=/nlu.yml
 N_STORIES=/stories.yml
 N_DOMAIN=/domain.yml
 N_ACTION=/stories.yml
+backup_folder_name=$(date +%Y%m%d)
 # current setting file
 NLU=/data/nlu.yml
 DOMAIN=/domain.yml
@@ -17,10 +18,11 @@ STORIES=/data/stories.yml
 ACTION=/actions/actions.py
 
 # backup current settings
-cp $RASA_DIR$NLU $RASA_DIR$FILE_BACKUP_DIR/$(date +%Y%m%d)$N_NLU
-cp $RASA_DIR$STORIES $RASA_DIR$FILE_BACKUP_DIR/$(date +%Y%m%d)$N_STORIES
-cp $RASA_DIR$ACTION $RASA_DIR$FILE_BACKUP_DIR/$(date +%Y%m%d)$N_ACTION
-cp $RASA_DIR$DOMAIN $RASA_DIR$FILE_BACKUP_DIR/$(date +%Y%m%d)$N_DOMAIN
+mkdir -p $RASA_DIR$FILE_BACKUP_DIR/"$backup_folder_name"
+cp $RASA_DIR$NLU $RASA_DIR$FILE_BACKUP_DIR/"$backup_folder_name"$N_NLU
+cp $RASA_DIR$STORIES $RASA_DIR$FILE_BACKUP_DIR/"$backup_folder_name"$N_STORIES
+cp $RASA_DIR$ACTION $RASA_DIR$FILE_BACKUP_DIR/"$backup_folder_name"$N_ACTION
+cp $RASA_DIR$DOMAIN $RASA_DIR$FILE_BACKUP_DIR/"$backup_folder_name"$N_DOMAIN
 
 # override settings
 cp $PROJ_HOME$NEW_SETTING_DIR$N_NLU $RASA_DIR$NLU
