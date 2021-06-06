@@ -1,0 +1,15 @@
+stories:
+  - story: service health info
+    steps:
+      - intent: service_health
+      - action: utter_service_health
+      - action: action_restart
+  - story: service info
+    steps:
+      - intent: service_info
+      - action: action_service_info
+      - action: action_restart
+  - story: greet sweet
+    steps:
+      - intent: sweet
+      - action: greeting

@@ -1,0 +1,54 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- help:
+    use_entities: []
+- inform
+- test:
+    use_entities:
+      - name
+      - first_name
+    ignore_entities:
+      - location
+      - age
+- greet
+slots:
+  address:
+    type: categorical
+    values:
+    - 132
+    - 456
+  word:
+    type: boolean
+    influence_conversation: true
+    auto_fill: false
+  email:
+    type: text
+    influence_conversation: false
+entities:
+- city
+- person
+- time
+responses:
+  utter_somehting:
+  - text: line1
+  - text: line2
+  utter_hello:
+  - text: |
+      {\"intent\": \"hello\"}
+actions:
+- action_search_concerts
+- action_search_venues
+- action_test
+forms:
+  your_form:
+    required_slots:
+      slot_name:
+        - type: from_entity
+          entity: entity_name
+          role: role_name
+          group: group name
+          intent: intent_name
+          not_intent: excluded_intent
