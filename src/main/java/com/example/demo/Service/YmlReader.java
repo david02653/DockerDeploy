@@ -526,6 +526,7 @@ public class YmlReader {
         ArrayList<String> responseConfig = new ArrayList<>();
         String name = "";
         for(String token: detail){
+            if(token.strip().startsWith("#")) continue;
             if(token.matches("^  [a-zA-Z].*")){
                 // create new response
                 token = token.replace(":", "");
