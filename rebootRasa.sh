@@ -9,8 +9,8 @@ FILE_BACKUP_DIR=/backup/script_rebuild
 N_NLU=/nlu.yml
 N_STORIES=/stories.yml
 N_DOMAIN=/domain.yml
-N_ACTION=/stories.yml
-backup_folder_name=$(date +%Y%m%d)
+N_ACTION=/actions.py
+backup_folder_name=$(date +%Y%m%d%H%M)
 # current setting file
 NLU=/data/nlu.yml
 DOMAIN=/domain.yml
