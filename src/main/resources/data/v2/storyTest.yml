@@ -1,0 +1,20 @@
+stories:
+  #  - story: greet and subscribe
+  #    steps:
+  #    - intent: greet
+  #    - action: utter_greet
+  #    - intent: subscribe
+  #    - action: newsletter_form
+  #    - active_loop: newsletter_form
+
+  - story: service health info
+    steps:
+      - intent: service_health
+      - action: utter_service_health
+      - action: action_restart
+
+  - story: service info
+    steps:
+      - intent: service_info
+      - action: action_service_info
+      - action: action_restart

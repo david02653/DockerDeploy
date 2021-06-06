@@ -1,5 +1,4 @@
 version: '2.0'
-# test set 1
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -24,14 +23,24 @@ slots:
     values:
     - 132
     - 456
+  word:
+    type: boolean
+    influence_conversation: true
+    auto_fill: false
 entities:
 - person
+- time
+- city
 responses:
   utter_hello:
   - text: |
       {\"intent\": \"hello\"}
+  utter_somehting:
+  - text: line1
+  - text: line2
 actions:
 - action_search_concerts
+- action_search_venues
 forms:
   your_form:
     required_slots:

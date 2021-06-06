@@ -59,7 +59,9 @@ public class YmlReader {
         NluFile parsedFile = null;
         File file = new File(path);
         try{
-            Object loadedYaml = yaml.load(new FileReader(SOURCE_PREFIX + path));
+            System.out.println("[YmlReader.loadNlu] load path: [" + path + "]");
+//            Object loadedYaml = yaml.load(new FileReader(SOURCE_PREFIX + path)); // testing file path
+            Object loadedYaml = yaml.load(new FileReader(path));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String jsonString = gson.toJson(loadedYaml, LinkedHashMap.class);
 //            System.out.println(jsonString);
@@ -71,6 +73,11 @@ public class YmlReader {
         }
         return parsedFile;
     }
+    public NluFile loadNlu(ArrayList<String> input) throws IOException{
+        YmlWriter writer = new YmlWriter();
+        writer.writeNlu(SOURCE_PREFIX + "tmp/nlu.yml", input);
+        return loadNlu(SOURCE_PREFIX + "tmp/nlu.yml");
+    }
 
     /**
      * load stories.yml, read line by line because i don't know how many steps will be in each stories
@@ -79,7 +86,9 @@ public class YmlReader {
     public StoryFile loadStory(String path){
         StoryFile storyFile = new StoryFile();
         try{
-            FileReader reader = new FileReader(SOURCE_PREFIX + path);
+            System.out.println("[YmlReader.loadStory] load path: [" + path + "]");
+//            FileReader reader = new FileReader(SOURCE_PREFIX + path); // testing file path
+            FileReader reader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(reader);
             ArrayList<String> step = null;
             ArrayList<StoryObject> storyList = new ArrayList<>();
@@ -118,6 +127,39 @@ public class YmlReader {
 //        System.out.println(storyFile);
         return storyFile;
     }
+    public StoryFile loadStory(ArrayList<String> input) throws IOException{
+        StoryFile storyFile = new StoryFile();
+        ArrayList<String> step = null;
+        ArrayList<StoryObject> storyList = new ArrayList<>();
+        StoryObject story = null;
+        for(String line: input){
+            line = line.strip();
+            if(line.startsWith("#") || line.startsWith("stories")) continue;
+            if(line.startsWith("- story")){
+                // create new story or store previous story
+                if(story != null){
+                    // previous story exist
+                    story.setSteps(step);
+                    storyList.add(story);
+                }
+                String name = line.split(":")[1];
+                story = new StoryObject(name.strip()); // create new story
+            }else if(line.startsWith("steps")){
+                // create new steps list
+                step = new ArrayList<>();
+            }else{
+                // should be steps content, store it
+                if(line.length() < 1) continue;
+                if(step != null)
+                    step.add(line);
+            }
+        }
+        if(story != null)
+            story.setSteps(step);
+        storyList.add(story);
+        storyFile.setStoryList(storyList);
+        return storyFile;
+    }
 
     /**
      * load response.yml file, read line
@@ -126,7 +168,9 @@ public class YmlReader {
     public ResponseFile loadResponse(String path){
         ResponseFile file = new ResponseFile();
         try{
-            FileReader reader = new FileReader(SOURCE_PREFIX + path);
+            System.out.println("[YmlReader.loadResponse] load path: [" + path + "]");
+//            FileReader reader = new FileReader(SOURCE_PREFIX + path); // testing file path
+            FileReader reader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(reader);
             ArrayList<ResponseObject> list = new ArrayList<>();
             ArrayList<String> content = null;
@@ -165,13 +209,16 @@ public class YmlReader {
      * mainly for local rasa domain setting file
      * ignore several settings currently, need to add more things for complete domain setting
      * currently un-completed
+     * suspend
      * @param path file path
      */
-    public void loadDomain(String path){
+    public void loadDomainToObj(String path){
         DomainFile file = new DomainFile();
         DomainEditFlag editFlag = DomainEditFlag.NONE;
         try{
-            FileReader reader = new FileReader(SOURCE_PREFIX + path);
+            System.out.println("[YmlReader.loadDomainToObj] load path: [" + path + "]");
+//            FileReader reader = new FileReader(SOURCE_PREFIX + path); // testing file path
+            FileReader reader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(reader);
             ArrayList<IntentSet> intentList = new ArrayList<>();
             ArrayList<EntitySet> entityList;
@@ -292,7 +339,9 @@ public class YmlReader {
         // value: string ArrayList of setting content
         HashMap<String, ArrayList<String>> domainMap = new HashMap<>();
         try{
-            FileReader reader = new FileReader(SOURCE_PREFIX + path);
+            System.out.println("[YmlReader.loadDomainAsString] load path: [" + path + "]");
+//            FileReader reader = new FileReader(SOURCE_PREFIX + path); // testing file path
+            FileReader reader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             ArrayList<String> tmp = null; // store current setting details
@@ -326,6 +375,37 @@ public class YmlReader {
             e.printStackTrace();
         }
         return domainMap;
+    }
+    public HashMap<String, HashMap<String, Setting>> loadDomain(ArrayList<String> input) throws IOException{
+        DomainEditFlag currentFlag = DomainEditFlag.NONE;
+        DomainEditFlag previousFlag = DomainEditFlag.NONE;
+        HashMap<String, ArrayList<String>> domainMap = new HashMap<>();
+        ArrayList<String> tmp = null; // store current setting details
+        for(String line: input){
+            if(line.startsWith("#")) continue; // ignore annotation in file
+            else if(line.startsWith("version:")){
+                // save version data, do nothing for now, suppose every version is '2.0'
+                continue;
+            }
+            // check edit flag if line starts with specific character
+            if(line.matches("^[afiesrv].*"))
+                currentFlag = checkDomainEditFlag(line);
+            if(previousFlag != currentFlag){
+                // suppose previous object exist
+                if(tmp != null)
+                    domainMap.put(previousFlag.name(), tmp);
+                // change to new stage, initialize instance
+                tmp = new ArrayList<>();
+                previousFlag = currentFlag;
+                continue;
+            }
+            // store data
+            if(currentFlag != DomainEditFlag.NONE){
+                tmp.add(line);
+            }
+        }
+        if(tmp != null) domainMap.put(currentFlag.name(), tmp); // store last loaded object
+        return parseDomainMap(domainMap);
     }
 
     /**
@@ -366,7 +446,7 @@ public class YmlReader {
      * @param detail domain file detail
      * @return parsed hashmap
      */
-    public HashMap<String, Setting> parseStringAction(ArrayList<String> detail){
+    private HashMap<String, Setting> parseStringAction(ArrayList<String> detail){
         HashMap<String, Setting> actionMap = new HashMap<>();
         for(String token: detail){
             token = token.strip().substring(2);
@@ -374,7 +454,7 @@ public class YmlReader {
         }
         return actionMap;
     }
-    public HashMap<String, Setting> parseStringIntent(ArrayList<String> detail){
+    private HashMap<String, Setting> parseStringIntent(ArrayList<String> detail){
         HashMap<String, Setting> intentList = new HashMap<>();
         Setting intent = new Setting();
         ArrayList<String> tmp;
@@ -397,7 +477,7 @@ public class YmlReader {
         }
         return intentList;
     }
-    public HashMap<String, Setting> parseStringSession(ArrayList<String> detail){
+    private HashMap<String, Setting> parseStringSession(ArrayList<String> detail){
         HashMap<String, Setting> sessionConfig = new HashMap<>();
         Setting session = new Setting();
         ArrayList<String> tmp;
@@ -410,7 +490,7 @@ public class YmlReader {
         }
         return sessionConfig;
     }
-    public HashMap<String, Setting> parseStringForm(ArrayList<String> detail){
+    private HashMap<String, Setting> parseStringForm(ArrayList<String> detail){
         HashMap<String, Setting> formList = new HashMap<>();
         Setting form = new Setting();
         ArrayList<String> tmp;
@@ -433,28 +513,14 @@ public class YmlReader {
         }
         return formList;
     }
-    public HashMap<String, Setting> parseStringSlot(ArrayList<String> detail){
-        HashMap<String, Setting> slotList = new HashMap<>();
-        Setting slot = new Setting();
-        ArrayList<String> slotConfig = new ArrayList<>();
-        String name = "";
-        for(String token: detail){
-            if(token.matches("^  [a-zA-Z].*")){
-                // create new slot
-                token = token.replace(":", "");
-                token = token.strip();
-                name = token;
-                slot = new Setting(name);
-            }else{
-                slotConfig = slot.getDetails();
-                slotConfig.add(token);
-                slot.setDetails(slotConfig);
-            }
-            slotList.put(name, slot);
-        }
-        return slotList;
+    private HashMap<String, Setting> parseStringSlot(ArrayList<String> detail){
+        return getStringSettingHashMap(detail);
     }
-    public HashMap<String, Setting> parseStringResponse(ArrayList<String> detail){
+    private HashMap<String, Setting> parseStringResponse(ArrayList<String> detail){
+        return getStringSettingHashMap(detail);
+    }
+
+    private HashMap<String, Setting> getStringSettingHashMap(ArrayList<String> detail) {
         HashMap<String, Setting> responseList = new HashMap<>();
         Setting response = new Setting();
         ArrayList<String> responseConfig = new ArrayList<>();
@@ -475,7 +541,8 @@ public class YmlReader {
         }
         return responseList;
     }
-    public HashMap<String, Setting> parseStringEntities(ArrayList<String> detail){
+
+    private HashMap<String, Setting> parseStringEntities(ArrayList<String> detail){
         HashMap<String, Setting> entitiesList = new HashMap<>();
         for(String token: detail){
             token = token.strip().substring(2);
@@ -493,7 +560,9 @@ public class YmlReader {
         ActionFile actionFile = new ActionFile();
         HashMap<String, ActionFunc> actionPair = new HashMap<>();
         try{
-            FileReader fileReader = new FileReader(SOURCE_PREFIX + path);
+            System.out.println("[YmlReader.loadAction] load path: [" + path + "]");
+//            FileReader fileReader = new FileReader(SOURCE_PREFIX + path); // testing file path
+            FileReader fileReader = new FileReader(path);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             ArrayList<String> config = new ArrayList<>();
             ActionFunc action = null;
@@ -530,6 +599,40 @@ public class YmlReader {
         }catch (IOException e){
             e.printStackTrace();
         }
+        return actionFile;
+    }
+    public ActionFile loadAction(ArrayList<String> input){
+        ActionFile actionFile = new ActionFile();
+        HashMap<String, ActionFunc> actionPair = new HashMap<>();
+        ArrayList<String> config = new ArrayList<>();
+        ActionFunc action = null;
+        ArrayList<String> actionDetail = new ArrayList<>();
+        String name;
+        for(String line: input){
+            if(line.matches("^from.*import.*")){
+                // import statement
+                config.add(line);
+                continue;
+            }else if(line.strip().startsWith("#"))
+                continue;
+            if(line.matches("^class.*\\(.*\\):")){
+                // create new action
+                actionDetail = new ArrayList<>();
+                actionDetail.add(line);
+                name = line.split("\\(")[0].replace("class", "").strip();
+                action = new ActionFunc(name);
+            }else if(line.strip().matches("^return.*")){
+                // end of action
+                actionDetail.add(line);
+                action.setContent(actionDetail);
+                actionPair.put(action.getActionName(), action);
+            }else{
+                // action content
+                actionDetail.add(line);
+            }
+        }
+        actionFile.setImportConfig(config);
+        actionFile.setActionList(actionPair);
         return actionFile;
     }
 }

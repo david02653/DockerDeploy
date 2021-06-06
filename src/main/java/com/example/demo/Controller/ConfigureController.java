@@ -59,7 +59,6 @@ public class ConfigureController {
 
     @PostMapping(value = "/gen")
     public ResponseEntity<String> postAllConfig(@RequestBody String list) {
-//        System.out.println(list);
         service.splitConfig(list);
         return ResponseEntity.ok("ok");
     }

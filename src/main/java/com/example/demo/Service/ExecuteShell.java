@@ -11,10 +11,15 @@ public class ExecuteShell {
 
     public void runEcho(String msg) throws IOException, InterruptedException {
         runtime = Runtime.getRuntime();
+        String[] cmd;
+        if(System.getProperty("os.name").toLowerCase().contains("windows"))
+            cmd = new String[]{"cmd.exe", "/c", "echo", msg};
+        else
+            cmd = new String[]{"echo", msg};
         /* windows */
 //        String[] cmd = new String[]{"cmd.exe", "/c", "echo", msg};
         /* linux */
-        String[] cmd = new String[]{"echo", msg};
+//        String[] cmd = new String[]{"echo", msg};
         Process process = runtime.exec(cmd);
         process.waitFor();
 

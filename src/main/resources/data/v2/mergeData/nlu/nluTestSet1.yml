@@ -1,0 +1,10 @@
+nlu:
+  # test set 1
+- intent: get_some_help
+  examples: |
+    - stop it
+    - get some help
+- synonym: test_file
+  examples: |
+    - test file
+    - testfile

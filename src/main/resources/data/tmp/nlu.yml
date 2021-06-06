@@ -1,0 +1,6 @@
+# test update nlu setting
+nlu:
+- intent: sweet
+  examples: |
+    - gum
+    - chocolate

@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class IntegrateSetting {
-    public NluFile integrateNlu(NluFile source, NluFile addition){
+public class MergeSetting {
+    public NluFile mergeNlu(NluFile source, NluFile addition){
         NluFile result = new NluFile();
         result.setNlu(source.getNlu());
         List<NluObject> resultList = result.getNlu();
@@ -36,7 +36,7 @@ public class IntegrateSetting {
         return result;
     }
 
-    public ActionFile integrateAction(ActionFile source, ActionFile addition){
+    public ActionFile mergeAction(ActionFile source, ActionFile addition){
         ActionFile result = source.copy();
         ArrayList<String> config = result.getImportConfig();
         HashMap<String, ActionFunc> actionList = result.getActionList();
@@ -55,7 +55,7 @@ public class IntegrateSetting {
         return result;
     }
 
-    public StoryFile integrateStory(StoryFile source, StoryFile addition){
+    public StoryFile mergeStory(StoryFile source, StoryFile addition){
         StoryFile result = source.copy();
         ArrayList<StoryObject> storyList = result.getStoryList();
         for(StoryObject addObj: addition.getStoryList()){
@@ -75,7 +75,7 @@ public class IntegrateSetting {
      * @param addition new domain settings wants to add
      * @return merged domain file hashMap
      */
-    public HashMap<String, HashMap<String, Setting>> integrateDomain(HashMap<String, HashMap<String, Setting>> source, HashMap<String, HashMap<String, Setting>> addition){
+    public HashMap<String, HashMap<String, Setting>> mergeDomain(HashMap<String, HashMap<String, Setting>> source, HashMap<String, HashMap<String, Setting>> addition){
         // copy source map
         HashMap<String, HashMap<String, Setting>> resultMap = new HashMap<>();
 //        source.forEach((k, v) -> {resultMap.put(k, v);});
@@ -119,7 +119,7 @@ public class IntegrateSetting {
         return resultMap;
     }
 
-    public void integrateResponse(ResponseFile source, ResponseFile addition){
+    public void mergeResponse(ResponseFile source, ResponseFile addition){
         ResponseFile result = new ResponseFile();
         result.setResponseList(source.getResponseList());
         ArrayList<ResponseObject> resultList = result.getResponseList();
@@ -134,6 +134,6 @@ public class IntegrateSetting {
         result.setResponseList(resultList);
     }
 
-    public void integrateRule(){
+    public void mergeRule(){
     }
 }

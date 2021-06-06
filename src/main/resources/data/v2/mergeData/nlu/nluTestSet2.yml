@@ -1,0 +1,13 @@
+nlu:
+  # test set 2
+- intent: test_intent
+  examples: |
+    - test 1
+    - test 2
+- regex: help
+  examples: |
+    - \bhelp\b
+- lookup: fruit
+  examples: |
+    - apple
+    - mango
