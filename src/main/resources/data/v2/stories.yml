@@ -1,0 +1,74 @@
+stories:
+#  - story: greet and subscribe
+#    steps:
+#    - intent: greet
+#    - action: utter_greet
+#    - intent: subscribe
+#    - action: newsletter_form
+#    - active_loop: newsletter_form
+
+ - story: service health info
+   steps:
+   - intent: service_health
+   - action: utter_service_health
+   - action: action_restart
+
+ - story: service info
+   steps:
+   - intent: service_info
+   - action: action_service_info
+   - action: action_restart
+
+ - story: service using info
+   steps:
+   - intent: service_using_info
+   - action: action_service_using_info
+   - action: action_restart
+
+ - story: service api list
+   steps:
+   - intent: service_api_list
+   - action: action_service_api_list
+   - action: action_restart
+
+ - story: service env
+   steps:
+   - intent: service_env
+   - action: utter_env
+   - action: action_restart
+
+ - story: service only
+   steps:
+   - intent: service_only
+   - action: action_service_only
+   - action: action_restart
+
+ - story: last build fail
+   steps:
+   - intent: last_build_fail
+   - action: action_build_fail
+   - action: action_restart
+
+ - story: connect error
+   steps:
+   - intent: connect_error
+   - action: action_connect_error
+   - action: action_restart
+
+ - story: bot help
+   steps:
+   - intent: bot_help
+   - action: utter_bot_help
+   - action: action_restart
+
+ - story: bot join
+   steps:
+   - intent: bot_join
+   - action: utter_bot_join
+   - action: action_restart
+
+ - story: service dependency graph
+   steps:
+   - intent: service_dependency_graph
+   - action: utter_dependency_graph
+   - action: action_restart

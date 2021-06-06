@@ -1,0 +1,79 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- inform
+- subscribe
+- bot_join
+- hello
+- service_health
+- service_info
+- service_using_info
+- service_api_list
+- service_env
+- service_only
+- last_build_fail
+- connect_error
+- bot_help
+- service_dependency_graph
+slots:
+  email:
+    type: unfeaturized
+    influence_conversation: false
+entities:
+responses:
+  # utter_greet:
+  # - text: |
+  #     Hello! How can I help you?
+  # - text: |
+  #     Hi!
+  # utter_ask_email:
+  # - text: |
+  #     What is your email address?
+  # utter_subscribed:
+  # - text: |
+  #     Check your inbox at {email} in order to finish subscribing to the newsletter!
+  # - text: You're all set! Check your inbox at {email} to confirm your subscription.
+  utter_dependency_graph:
+  - text: |
+      {\"intent\": \"action_dependency_graph\"}
+  utter_hello:
+  - text: |
+      {\"intent\": \"hello\"}
+  utter_bot_join:
+  - text: |
+      {\"intent\": \"bot_join\"}
+  utter_service_health:
+  - text: |
+      {\"intent\": \"action_service_health\"}
+  utter_env:
+  - text: |
+      {\"intent\": \"action_service_env\"}
+  utter_bot_help:
+  - text: |
+      {\"intent\": \"bot_help\"}
+  utter_default:
+  - text: |
+      {\"intent\": \"none\"}
+actions:
+# - '...'
+# - utter_greet
+# - utter_subscribed
+- utter_bot_join
+- utter_hello
+- utter_env
+- utter_bot_help
+- utter_service_health
+- action_service_info
+- action_service_using_info
+- action_service_api_list
+- action_service_only
+- action_build_fail
+- action_connect_error
+- utter_dependency_graph
+forms:
+  newsletter_form:
+    email:
+    - type: from_text
