@@ -3,7 +3,6 @@ package com.example.demo.Service;
 import com.example.demo.entity.Rasa.v2.action.ActionFile;
 import com.example.demo.entity.Rasa.v2.domain.Setting;
 import com.example.demo.entity.Rasa.v2.nlu.NluFile;
-import com.example.demo.entity.Rasa.v2.nlu.NluObject;
 import com.example.demo.entity.Rasa.v2.story.StoryFile;
 import com.example.demo.entity.Rasa.v2.story.StoryObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class IntegrateSettingTest {
+class MergeSettingTest {
 
-    private final String SOURCE_DIR = "v2/mergeData/";
+    private final String SOURCE_DIR = "src/main/resources/data/v2/mergeData/";
     private final String NLU_SET1 = "nlu/nluTestSet1.yml";
     private final String NLU_SET2 = "nlu/nluTestSet2.yml";
     private final String ACT_SET1 = "action/actionsTestSet1.py";
@@ -23,7 +22,7 @@ class IntegrateSettingTest {
     private final String STR_SET2 = "story/storyTestSet2.yml";
     private final String DOM_SET1 = "domain/domainTestSet1.yml";
     private final String DOM_SET2 = "domain/domainTestSet2.yml";
-    private IntegrateSetting test;
+    private MergeSetting test;
     private YmlReader reader;
 
     private String dir(String name){
@@ -32,7 +31,7 @@ class IntegrateSettingTest {
 
     @BeforeEach
     void setUp() {
-        test = new IntegrateSetting();
+        test = new MergeSetting();
         reader = new YmlReader();
     }
 
@@ -48,7 +47,7 @@ class IntegrateSettingTest {
         set2.getNlu().forEach(obj -> {
             System.out.println(obj.findName());
         });
-        NluFile result = test.integrateNlu(set1, set2);
+        NluFile result = test.mergeNlu(set1, set2);
         System.out.println("result > " + result.getNlu().size());
         result.getNlu().forEach(obj -> {
             System.out.println(obj.findName());
@@ -67,7 +66,7 @@ class IntegrateSettingTest {
         set2.getActionList().forEach((name, func) -> {
             System.out.println(name);
         });
-        ActionFile result = test.integrateAction(set1, set2);
+        ActionFile result = test.mergeAction(set1, set2);
         System.out.println("res > " + result.getActionList().size());
         result.getActionList().forEach((name, func) -> {
             System.out.println(name);
@@ -90,7 +89,7 @@ class IntegrateSettingTest {
         for(StoryObject obj: set2.getStoryList()){
             System.out.println(obj.getName());
         }
-        StoryFile result = test.integrateStory(set1, set2);
+        StoryFile result = test.mergeStory(set1, set2);
         System.out.println("res > " + result.getStoryList().size());
         for(StoryObject obj: result.getStoryList()){
             System.out.println(obj.getName());
@@ -111,7 +110,7 @@ class IntegrateSettingTest {
         set2.forEach((k, v) -> {
             System.out.println(k + " > " + v.size());
         });
-        HashMap<String, HashMap<String, Setting>> result = test.integrateDomain(set1, set2);
+        HashMap<String, HashMap<String, Setting>> result = test.mergeDomain(set1, set2);
         System.out.println(result);
         result.forEach((k, v) -> {
             System.out.println(k + " > " + v.size());

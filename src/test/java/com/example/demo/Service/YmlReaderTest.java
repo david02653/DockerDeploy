@@ -29,25 +29,25 @@ class YmlReaderTest {
 
     @Test
     void loadNluViaSnakeYml(){
-        NluFile result = reader.loadNlu(NLU_TEST);
+        NluFile result = reader.loadNlu(contentRootPrefix + NLU_TEST);
         System.out.println(result);
     }
 
     @Test
     void loadStory(){
-        StoryFile result = reader.loadStory(STORY_TEST);
+        StoryFile result = reader.loadStory(contentRootPrefix + STORY_TEST);
         System.out.println(result);
     }
 
     @Test
     void loadResponse(){
-        ResponseFile result = reader.loadResponse(RESP_TEST);
+        ResponseFile result = reader.loadResponse(contentRootPrefix + RESP_TEST);
         System.out.println(result);
     }
 
     @Test
     void testLoadDomainAsString(){
-        HashMap<String, ArrayList<String>> map = reader.loadDomainAsString(DOM_TEST);
+        HashMap<String, ArrayList<String>> map = reader.loadDomainAsString(contentRootPrefix + DOM_TEST);
         map.forEach((k, v) -> {
             System.out.println(k + " >");
             System.out.println(v);
@@ -56,7 +56,7 @@ class YmlReaderTest {
 
     @Test
     void testParseDomainMap(){
-        HashMap<String, ArrayList<String>> map = reader.loadDomainAsString(DOM_TEST);
+        HashMap<String, ArrayList<String>> map = reader.loadDomainAsString(contentRootPrefix + DOM_TEST);
         HashMap<String, HashMap<String, Setting>> resultMap = reader.parseDomainMap(map);
         resultMap.forEach((k, v) -> {
             System.out.println(k + " >");
@@ -66,7 +66,7 @@ class YmlReaderTest {
 
     @Test
     void testAction(){
-        ActionFile file = reader.loadAction(ACT_TEST);
+        ActionFile file = reader.loadAction(contentRootPrefix + ACT_TEST);
         ArrayList<String> config = file.getImportConfig();
         HashMap<String, ActionFunc> actionMap = file.getActionList();
         System.out.println("config >");
