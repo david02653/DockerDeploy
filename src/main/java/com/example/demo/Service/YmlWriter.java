@@ -21,6 +21,7 @@ import java.util.Map;
 public class YmlWriter {
 
     public void writeNlu(String outputPath, NluFile content) throws IOException {
+        System.out.println("[YmlWriter.writeNlu] write path: ["+ outputPath + "]");
         FileWriter wr = new FileWriter(outputPath);
         BufferedWriter buff = new BufferedWriter(wr);
         List<NluObject> list = content.getNlu();
@@ -44,6 +45,7 @@ public class YmlWriter {
     }
 
     public void writeNlu(String outputPath, ArrayList<String> content)throws IOException{
+        System.out.println("[YmlWriter.writeNlu] write path: ["+ outputPath + "]");
         FileWriter file = null;
         BufferedWriter writer = null;
         file = new FileWriter(outputPath);
@@ -56,6 +58,7 @@ public class YmlWriter {
     }
 
     public void writeAction(String outputPath, ActionFile file) throws IOException {
+        System.out.println("[YmlWriter.writeAction] write path: ["+ outputPath + "]");
         FileWriter wr = new FileWriter(outputPath);
         BufferedWriter buff = new BufferedWriter(wr);
         HashMap<String, ActionFunc> list = file.getActionList();
@@ -78,6 +81,7 @@ public class YmlWriter {
     }
 
     public void writeStory(String outputPath, StoryFile file) throws IOException {
+        System.out.println("[YmlWriter.writeStory] write path: ["+ outputPath + "]");
         FileWriter wr = new FileWriter(outputPath);
         BufferedWriter buff = new BufferedWriter(wr);
         ArrayList<StoryObject> list = file.getStoryList();
@@ -104,6 +108,7 @@ public class YmlWriter {
      * @param file current domain setting, Map< domain_data_type, Map< data_name, data_content>>
      */
     public void writeDomain(String outputPath, HashMap<String, HashMap<String, Setting>> file) throws IOException {
+        System.out.println("[YmlWriter.writeDomain] write path: ["+ outputPath + "]");
         FileWriter wr = new FileWriter(outputPath);
         BufferedWriter buff = new BufferedWriter(wr);
         HashMap<String, Setting> content;
