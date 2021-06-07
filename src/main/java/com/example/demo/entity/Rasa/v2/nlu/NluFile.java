@@ -2,6 +2,7 @@ package com.example.demo.entity.Rasa.v2.nlu;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class NluFile {
@@ -24,6 +25,8 @@ public class NluFile {
     }
 
     public void checkExample(){
+        if(nlu == null)
+            return;
         for(NluObject n: nlu){
             n.list();
         }

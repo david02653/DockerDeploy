@@ -22,6 +22,8 @@ public class MergeSetting {
         result.setNlu(source.getNlu());
         List<NluObject> resultList = result.getNlu();
         List<NluObject> addList = addition.getNlu();
+        if(addList == null)
+            return result;
         for(NluObject target: addList){
             if(result.containsName(target.findName())){
                 // this name already exist
@@ -59,6 +61,8 @@ public class MergeSetting {
         StoryFile result = source.copy();
         ArrayList<StoryObject> storyList = result.getStoryList();
         for(StoryObject addObj: addition.getStoryList()){
+            if(addObj == null)
+                continue;
             if(storyList.stream().noneMatch(obj -> obj.getName().equals(addObj.getName()))){
                 storyList.add(addObj);
             }

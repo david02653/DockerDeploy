@@ -22,6 +22,10 @@ class MergeSettingTest {
     private final String STR_SET2 = "story/storyTestSet2.yml";
     private final String DOM_SET1 = "domain/domainTestSet1.yml";
     private final String DOM_SET2 = "domain/domainTestSet2.yml";
+    private final String str_empty = "src/main/resources/data/v2/emptyData/storyTestEmpty.yml";
+    private final String act_empty = "src/main/resources/data/v2/emptyData/actionTestEmpty.py";
+    private final String nlu_empty = "src/main/resources/data/v2/emptyData/nluTestEmpty.yml";
+    private final String dom_empty = "src/main/resources/data/v2/emptyData/domainTestEmpty.yml";
     private MergeSetting test;
     private YmlReader reader;
 
@@ -38,15 +42,19 @@ class MergeSettingTest {
     @Test
     void testMergeNlu() {
         NluFile set1 = reader.loadNlu(dir(NLU_SET1));
-        NluFile set2 = reader.loadNlu(dir(NLU_SET2));
+//        NluFile set2 = reader.loadNlu(dir(NLU_SET2));
+        NluFile set2 = reader.loadNlu(nlu_empty);
         System.out.println("set1 > " + set1.getNlu().size());
         set1.getNlu().forEach(obj -> {
             System.out.println(obj.findName());
         });
-        System.out.println("set2 > " + set2.getNlu().size());
-        set2.getNlu().forEach(obj -> {
-            System.out.println(obj.findName());
-        });
+        if(set2.getNlu() != null) {
+            System.out.println("set2 > " + set2.getNlu().size());
+            set2.getNlu().forEach(obj -> {
+                System.out.println(obj.findName());
+            });
+        }else
+            System.out.println("set2 > 0 (null)");
         NluFile result = test.mergeNlu(set1, set2);
         System.out.println("result > " + result.getNlu().size());
         result.getNlu().forEach(obj -> {
@@ -57,7 +65,8 @@ class MergeSettingTest {
     @Test
     void testMergeAction(){
         ActionFile set1 = reader.loadAction(dir(ACT_SET1));
-        ActionFile set2 = reader.loadAction(dir(ACT_SET2));
+//        ActionFile set2 = reader.loadAction(dir(ACT_SET2));
+        ActionFile set2 = reader.loadAction(act_empty);
         System.out.println("set1 > " + set1.getActionList().size());
         set1.getActionList().forEach((name, func) -> {
             System.out.println(name);
@@ -80,13 +89,15 @@ class MergeSettingTest {
     @Test
     void testMergeStory(){
         StoryFile set1 = reader.loadStory(dir(STR_SET1));
-        StoryFile set2 = reader.loadStory(dir(STR_SET2));
+//        StoryFile set2 = reader.loadStory(dir(STR_SET2));
+        StoryFile set2 = reader.loadStory(str_empty);
         System.out.println("set1 > " + set1.getStoryList().size());
         for(StoryObject obj: set1.getStoryList()){
             System.out.println(obj.getName());
         }
         System.out.println("set2 > " + set2.getStoryList().size());
         for(StoryObject obj: set2.getStoryList()){
+            if(obj == null) continue;
             System.out.println(obj.getName());
         }
         StoryFile result = test.mergeStory(set1, set2);
@@ -100,7 +111,8 @@ class MergeSettingTest {
     void testMergeDomain(){
         HashMap<String, ArrayList<String>> rawSet1 = reader.loadDomainAsString(dir(DOM_SET1));
         HashMap<String, HashMap<String, Setting>> set1 = reader.parseDomainMap(rawSet1);
-        HashMap<String, ArrayList<String>> rawSet2 = reader.loadDomainAsString(dir(DOM_SET2));
+//        HashMap<String, ArrayList<String>> rawSet2 = reader.loadDomainAsString(dir(DOM_SET2));
+        HashMap<String, ArrayList<String>> rawSet2 = reader.loadDomainAsString(dom_empty);
         HashMap<String, HashMap<String, Setting>> set2 = reader.parseDomainMap(rawSet2);
         System.out.println(set1);
         set1.forEach((k, v) -> {

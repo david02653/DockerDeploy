@@ -1,0 +1,8 @@
+version: '2.0'
+session_config:
+intents:
+slots:
+entities:
+responses:
+actions:
+forms:
