@@ -23,6 +23,7 @@ public class MergeService {
     private final MergeSetting generator = new MergeSetting();
     private final YmlReader reader = new YmlReader();
     private final YmlWriter writer = new YmlWriter();
+    private final ConfigureService configureService = new ConfigureService();
     // current settings
     private NluFile nluFile;
     private StoryFile storyFile;
@@ -31,6 +32,9 @@ public class MergeService {
 
     public MergeService(Environment env){
         // load current setting files: nlu, story, action, domain
+        // extract settings from current file
+        configureService.runSpecShell("extractSetting.sh");
+        // load settings
         this.nluFile = reader.loadNlu(env.getProperty("rasa.setting.nlu"));
         this.storyFile = reader.loadStory(env.getProperty("rasa.setting.story"));
         this.actionFile = reader.loadAction(env.getProperty("rasa.setting.action"));

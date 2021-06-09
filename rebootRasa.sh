@@ -35,8 +35,10 @@ cp $PROJ_HOME$NEW_SETTING_DIR$N_DOMAIN $RASA_DIR$DOMAIN
 cd $RASA_DIR
 
 # activate vm for rasa
+# maybe move this script into project local script
 conda activate rasaspace
 # build new model
+# maybe move this script into project local script
 rasa train --fixed-model-name spacyModel
 # clean and deploy new rasa docker
 sh clean.sh
