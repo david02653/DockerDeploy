@@ -102,6 +102,8 @@ public class MergeService {
         StoryFile mergedStories = generator.mergeStory(storyFile, reader.loadStory(config.getStories()));
         ActionFile mergedAction = generator.mergeAction(actionFile, reader.loadAction(config.getAction()));
         HashMap<String, HashMap<String, Setting>> mergedDomain = generator.mergeDomain(domainFile, reader.loadDomain(config.getDomain()));
+        // valid domain file
+        mergedDomain = validDomain(mergedDomain);
         // export merged result file
         writer.writeNlu(env.getProperty("rasa.setting.result.nlu"), mergedNlu);
         writer.writeStory(env.getProperty("rasa.setting.result.story"), mergedStories);
@@ -126,7 +128,27 @@ public class MergeService {
 
     public void mergeDomain(String input) throws IOException{
         HashMap<String, HashMap<String, Setting>> mergedDomain = generator.mergeDomain(domainFile, reader.loadDomain(new ArrayList<String>(Arrays.asList(input.split("\n")))));
+        // valid domain file
+        mergedDomain = validDomain(mergedDomain);
         writer.writeDomain(env.getProperty("rasa.setting.result.domain"), mergedDomain);
+    }
+
+    /**
+     * check if domain file have empty entities
+     * put something in if empty
+     * in this case, insert SpacyEntityExtractor label 'DATE'
+     * note that this entity requires dimension definition in config.yml to work
+     * @param file domain file
+     */
+    public HashMap<String, HashMap<String, Setting>> validDomain(HashMap<String, HashMap<String, Setting>> file){
+        HashMap<String, Setting> entityList = file.get("entities");
+        if(entityList.size() <= 0){
+            // insert SpacyEntityExtractor label 'DATE'
+            Setting date = new Setting("DATE");
+            entityList.put("DATE", date);
+            file.put("entities", entityList);
+        }
+        return file;
     }
 
 }

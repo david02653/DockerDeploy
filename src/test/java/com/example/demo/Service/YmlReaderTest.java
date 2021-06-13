@@ -65,7 +65,7 @@ class YmlReaderTest {
 
     @Test
     void testParseDomainMap(){
-        HashMap<String, ArrayList<String>> map = reader.loadDomainAsString(addPrefix(dom_empty));
+        HashMap<String, ArrayList<String>> map = reader.loadDomainAsString(addPrefix(DOM_TEST_SET));
         HashMap<String, HashMap<String, Setting>> resultMap = reader.parseDomainMap(map);
         resultMap.forEach((k, v) -> {
             System.out.println(k + " >");
