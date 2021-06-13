@@ -30,10 +30,13 @@ public class MergeService {
     private ActionFile actionFile;
     private HashMap<String, HashMap<String, Setting>> domainFile;
 
-    public MergeService(Environment env){
+    public MergeService(Environment env) {
         // load current setting files: nlu, story, action, domain
         // extract settings from current file
-        configureService.runSpecShell("extractSetting.sh");
+        if(configureService.runSpecShell("extractSetting.sh"))
+            System.out.println("Setting extraction success.");
+        else
+            System.out.println("failed to extract current settings !");
         // load settings
         this.nluFile = reader.loadNlu(env.getProperty("rasa.setting.nlu"));
         this.storyFile = reader.loadStory(env.getProperty("rasa.setting.story"));

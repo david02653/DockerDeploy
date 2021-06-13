@@ -102,6 +102,7 @@ public class AdditionalSettingController {
 
     @GetMapping(value = "/restart")
     public ResponseEntity<?> restartRasa(){
+        System.out.println("[GET] /restart: restart rasa");
         return configureService.runSpecShell("rebootRasa.sh")? ResponseEntity.ok("success"): ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something goes wrong");
     }
 
