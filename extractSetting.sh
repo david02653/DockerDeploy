@@ -16,6 +16,8 @@ DOMAIN=/domain.yml
 STORIES=/data/stories.yml
 ACTION=/actions/actions.py
 
+echo try to extract settings
+
 # get current setting file to merge folder from rasa folder
 yes | cp -rf $RASA_DIR$NLU $PROJ_HOME$NEW_SETTING_DIR$N_NLU
 yes | cp -rf $RASA_DIR$STORIES $PROJ_HOME$NEW_SETTING_DIR$N_STORIES
