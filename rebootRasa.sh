@@ -37,9 +37,18 @@ cd $RASA_DIR
 # activate vm for rasa
 # maybe move this script into project local script
 conda activate rasaspace
+
+# debug message
+echo activate conda
+echo try to retrain model
 # build new model
 # maybe move this script into project local script
 rasa train --fixed-model-name spacyModel
+
+# debug message
+echo restart docker
+
 # clean and deploy new rasa docker
+sh stop.sh
 sh clean.sh
 docker-compose up -d
